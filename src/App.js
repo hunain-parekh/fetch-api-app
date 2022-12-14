@@ -9,8 +9,7 @@ function App() {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     async function fetchData() {
-      const result = await mockData;
-      // fetch(process.env.REACT_APP_API_URL).then((response) =>
+      const result = await mockData; // fetch(process.env.REACT_APP_API_URL).then((response) =>
       //   response.json()
       // );
       act (()=>{
