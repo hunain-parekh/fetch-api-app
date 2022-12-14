@@ -9,9 +9,17 @@ function App() {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     async function fetchData() {
-      const result = await mockData; // fetch(process.env.REACT_APP_API_URL).then((response) =>
+
+      //test checking code 
+      const result = await mockData;
+
+      // if you want to test production api comment the test checking code and un-comment the production code
+
+      //production code
+      // const result =  await fetch(process.env.REACT_APP_API_URL).then((response) =>
       //   response.json()
       // );
+      
       act (()=>{
         setBlogPosts(result.slice(0,10));
         setLoading(false);
@@ -19,9 +27,13 @@ function App() {
     }
     fetchData();
   }, []);
+
+  function handleAdd(value){
+    setBlogPosts([...blogPosts,value]);
+  }
   return (
     <>
-      <NewPost />
+      <NewPost handleAdd={handleAdd}/>
       {loading ? <p>Loading...</p> : <BlogPosts blogPosts={blogPosts}/>} 
     </>
   );

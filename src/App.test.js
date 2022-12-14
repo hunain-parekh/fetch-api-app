@@ -19,9 +19,10 @@ describe('<App /> tests', () => {
 
     it('should post new data to api',async()=>{
         render(<App/>);
+        await waitForElementToBeRemoved(() => screen.getByText(/loading/i));
         userEvent.type(screen.getByRole("textbox"), 'my blog 6');
         userEvent.click(screen.getByText(/Save/i));
-        expect(screen.getByText(/my blog 6/i)).toBeInTheDocument();
+          expect(screen.getByText(/my blog 6/i)).toBeInTheDocument();
     });
 });
   
