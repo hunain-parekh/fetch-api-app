@@ -22,7 +22,9 @@ function App() {
   }, []);
 
   function handleAdd(value){
-    setBlogPosts([...blogPosts,value]);
+    act(()=>{
+      setBlogPosts([...blogPosts,value]);
+    });
   }
   return (
     <>

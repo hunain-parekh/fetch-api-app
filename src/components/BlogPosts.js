@@ -3,7 +3,7 @@ import classes from './BlogPosts.module.css';
 
 function BlogPosts({blogPosts}) {
   const posts = blogPosts.map((post)=> <BlogPost key={post.id} blogPost={post}/>)
-  return <ul classes={classes.list}>
+  return <ul className={classes.posts}>
     {posts}
   </ul>;
 }

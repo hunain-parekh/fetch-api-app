@@ -1,6 +1,6 @@
 export const BlogPost =({blogPost})=>{
     return(
-        <li>
+        <li key={blogPost.id}>
             {blogPost.title}
         </li>
     );

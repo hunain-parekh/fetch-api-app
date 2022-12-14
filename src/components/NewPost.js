@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { act } from "react-dom/test-utils";
 import classes from './NewPost.module.css';
 
 function NewPost({handleAdd}) {
@@ -19,28 +20,22 @@ function NewPost({handleAdd}) {
       body: 'hy',
     };
 
-    // test checking code
-    handleAdd(value);
-    setEnteredTitle('');
-
-    // if you want to check production api comment the test check code and comment out below code
-
-    //production code
-    // fetch(process.env.REACT_APP_API_URL, {
-    //   method: 'POST',
-    //   body: JSON.stringify(value),
-    //   headers: {
-    //     'Content-type': 'application/json; charset=UTF-8',
-    //   },
-    // })
-    //   .then((response) => response.json())
-    //   .then((result) => {
-    //     handleAdd(result);
-    //     setEnteredTitle('');
-    //      setButtonText('Save');
-    //   });
-
-    // Todo: Handle the creation of new posts and send new post data to https://jsonplaceholder.typicode.com/posts (via a POST) request
+    async function fetchData() {
+        await fetch(process.env.REACT_APP_API_URL, {
+        method: 'POST',
+        body: JSON.stringify(value),
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+      }).then((response) => response.json());
+      act (()=>{
+        setEnteredTitle('');
+        setButtonText('Save');
+        handleAdd(value);
+      })
+    }
+     fetchData();
+    
   }
   return (
     <form onSubmit={submitHandler} className={classes.form}>
