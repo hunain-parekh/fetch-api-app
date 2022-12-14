@@ -7,22 +7,34 @@ import BlogPosts from './components/BlogPosts';
 import NewPost from './components/NewPost';
 
 beforeEach(() => {
-    fetchMock.resetMocks();
-  });
+  jest.spyOn(global, 'fetch').mockResolvedValue({
+      json: jest.fn().mockResolvedValue(mockData)
+  })
+});
 
 describe('<App /> tests', () => {
     it('renders <App /> with api', async () => {
-        await fetchMock.once(JSON.stringify(mockData));
         render(<App/>);
-        await waitForElementToBeRemoved(()=> screen.getByText(/loading.../i));
+        await waitForElementToBeRemoved(()=> screen.getByText(/Loading.../i));
       })
 
     it('should post new data to api',async()=>{
         render(<App/>);
-        await waitForElementToBeRemoved(() => screen.getByText(/loading/i));
+        await waitForElementToBeRemoved(() => screen.getByText(/Loading.../i));
         userEvent.type(screen.getByRole("textbox"), 'my blog 6');
         userEvent.click(screen.getByText(/Save/i));
+        await waitFor(()=>{
           expect(screen.getByText(/my blog 6/i)).toBeInTheDocument();
+        })
+        
     });
+
+    it('should post new data to api',async()=>{
+      render(<App/>);
+      await waitForElementToBeRemoved(() => screen.getByText(/Loading.../i));
+      userEvent.type(screen.getByRole("textbox"), 'my blog 6');
+      userEvent.click(screen.getByRole('button'));
+      expect(screen.getByRole('button')).toHaveTextContent(/Saving.../i);
+  });
 });
   

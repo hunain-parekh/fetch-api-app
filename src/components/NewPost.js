@@ -3,6 +3,7 @@ import classes from './NewPost.module.css';
 
 function NewPost({handleAdd}) {
   const [enteredTitle, setEnteredTitle] = useState('');
+  const [buttonText,setButtonText] = useState('Save');
 
   function updateTitleHandler(event) {
     setEnteredTitle(event.target.value);
@@ -10,6 +11,7 @@ function NewPost({handleAdd}) {
 
   function submitHandler(event) {
     event.preventDefault();
+    setButtonText('Saving...');
     const value = {
       userId: 3,
       id: Math.floor(Math.random() * 10000) + 1,
@@ -35,6 +37,7 @@ function NewPost({handleAdd}) {
     //   .then((result) => {
     //     handleAdd(result);
     //     setEnteredTitle('');
+    //      setButtonText('Save');
     //   });
 
     // Todo: Handle the creation of new posts and send new post data to https://jsonplaceholder.typicode.com/posts (via a POST) request
@@ -45,7 +48,7 @@ function NewPost({handleAdd}) {
         <label>Title</label>
         <input type="text" onChange={updateTitleHandler} value={enteredTitle} />
       </div>
-      <button>Save</button>
+      <button>{buttonText}</button>
     </form>
   );
 }
